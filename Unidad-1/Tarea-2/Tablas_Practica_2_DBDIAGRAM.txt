@@ -1,0 +1,58 @@
+Table Cliente {
+  id_cliente int [primary key]
+  rut_dni varchar
+  nombre_completo varchar
+  telefono varchar
+  correo varchar
+}
+
+Table Mascota {
+  id_mascota int [primary key]
+  nombre varchar
+  especie varchar
+  raza varchar
+  fecha_nacimiento date
+  id_cliente int
+}
+
+Table Veterinario {
+  id_veterinario int [primary key]
+  documento_identidad varchar
+  nombre_completo varchar
+  especialidad varchar
+  telefono varchar
+}
+
+Table Atencion {
+  id_atencion int [primary key]
+  id_mascota int
+  id_veterinario int
+  fecha_hora datetime
+  diagnostico varchar
+  costo_base decimal
+}
+
+Table Medicamento {
+  codigo_medicamento varchar [primary key]
+  nombre_comercial varchar
+  laboratorio varchar
+  precio_unitario decimal
+}
+
+Table Prescripcion {
+  id_prescripcion int [primary key]
+  id_atencion int
+  codigo_medicamento varchar
+  cantidad int
+  indicaciones varchar
+}
+
+Ref cliente_mascota: Cliente.id_cliente < Mascota.id_cliente
+
+Ref mascota_atencion: Mascota.id_mascota < Atencion.id_mascota
+
+Ref veterinario_atencion: Veterinario.id_veterinario < Atencion.id_veterinario
+
+Ref atencion_prescripcion: Atencion.id_atencion < Prescripcion.id_atencion
+
+Ref medicamento_prescripcion: Medicamento.codigo_medicamento < Prescripcion.codigo_medicamento
