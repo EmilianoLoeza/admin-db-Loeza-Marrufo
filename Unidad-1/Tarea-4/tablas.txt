@@ -1,0 +1,55 @@
+Table Producto {
+  id_producto int [primary key]
+  nombre_producto varchar
+  precio_producto decimal
+  stock_producto int
+}
+
+Table Compras {
+  id_compra int [primary key]
+  fecha_compra date
+  total_compra decimal
+  estado_compra varchar
+}
+
+Table DetalleCompra {
+  id_detalle int [primary key]
+  id_compra int
+  id_producto int
+  cantidad_producto int
+  precio_unitario decimal
+}
+
+Table Pagos {
+  id_pago int [primary key]
+  id_compra int
+  monto_pago decimal
+  fecha_pago date
+}
+
+Ref compra_detalle: Compras.id_compra < DetalleCompra.id_compra
+Ref producto_detalle: Producto.id_producto < DetalleCompra.id_producto
+Ref compra_pago: Compras.id_compra < Pagos.id_compra
+
+
+Records Producto(id_producto, nombre_producto, precio_producto, stock_producto) {
+  1, 'Laptop', 12000.00, 10
+  2, 'Audifonos', 1500.00, 15
+  3, 'Mouse', 500.00, 20
+  4, 'Teclado', 800.00, 12
+}
+
+Records Compras(id_compra, fecha_compra, total_compra, estado_compra) {
+  1, '2026-09-18', 1500.00, 'completada'
+  2, '2026-09-18', 1000.00, 'completada'
+}
+
+Records DetalleCompra(id_detalle, id_compra, id_producto, cantidad_producto, precio_unitario) {
+  1, 1, 2, 1, 1500.00
+  2, 2, 3, 2, 500.00
+}
+
+Records Pagos(id_pago, id_compra, monto_pago, fecha_pago) {
+  1, 1, 1500.00, '2026-09-18'
+  2, 2, 1000.00, '2026-09-18'
+}

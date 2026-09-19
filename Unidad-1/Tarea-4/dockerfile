@@ -1,0 +1,4 @@
+FROM mysql:8.0
+
+ENV mysql_root_password=root
+ENV mysql_database=tienda_ecommerce
