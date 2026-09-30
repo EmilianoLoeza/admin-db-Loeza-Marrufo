@@ -1,0 +1,157 @@
+Table Especies {
+
+  id_especie int [primary key]
+
+  nombre_comun varchar
+
+  nombre_cientifico varchar
+
+  bioma varchar
+
+  clima varchar
+
+  habitos varchar
+
+}
+
+
+Table Recintos {
+
+  id_recinto int [primary key]
+
+  nombre_recinto varchar
+
+  bioma varchar
+
+  clima varchar
+
+  capacidad_maxima int
+
+  cupo_disponible int
+
+  disponibilidad varchar
+
+}
+
+
+Table Animales {
+
+  id_animal int [primary key]
+
+  expediente varchar
+
+  nombre_animal varchar
+
+  sexo varchar
+
+  fecha_ingreso date
+
+  estado_salud varchar
+
+  id_especie int
+
+  id_recinto int
+
+}
+
+
+Table EvaluacionesMedicas {
+
+  id_evaluacion int [primary key]
+
+  id_animal int
+
+  fecha_evaluacion date
+
+  diagnostico varchar
+
+  tratamiento varchar
+
+  observaciones varchar
+
+  estado_salud varchar
+
+}
+
+
+Table Movimientos {
+
+  id_movimiento int [primary key]
+
+  id_animal int
+
+  fecha_movimiento date
+
+  tipo_movimiento varchar
+
+  recinto_origen int
+
+  recinto_destino int
+
+  destino_externo varchar
+
+  motivo varchar
+
+}
+
+
+Ref especie_animal: Especies.id_especie < Animales.id_especie
+
+Ref recinto_animal: Recintos.id_recinto < Animales.id_recinto
+
+Ref animal_evaluacion: Animales.id_animal < EvaluacionesMedicas.id_animal
+
+Ref animal_movimiento: Animales.id_animal < Movimientos.id_animal
+
+Ref recinto_origen: Recintos.id_recinto < Movimientos.recinto_origen
+
+Ref recinto_destino: Recintos.id_recinto < Movimientos.recinto_destino
+
+
+Records Especies(id_especie, nombre_comun, nombre_cientifico, bioma, clima, habitos) {
+
+  1, 'Jaguar', 'Panthera onca', 'Selva', 'Tropical', 'Cazar'
+
+  2, 'Tucan', 'Ramphastos toco', 'Selva', 'Tropical', 'volar'
+
+  3, 'Iguana', 'Iguana iguana', 'Selva', 'Tropical', 'caminar'
+
+}
+
+
+Records Recintos(id_recinto, nombre_recinto, bioma, clima, capacidad_maxima, cupo_disponible, disponibilidad) {
+
+  1, 'Felinos - Zona A', 'Selva', 'Tropical', 10, 5, 'Disponible'
+
+  2, 'Cuarentena Aves', 'Selva', 'Tropical', 8, 3, 'Disponible'
+
+  3, 'Aviario General', 'Selva', 'Tropical', 15, 5, 'Disponible'
+
+  4, 'Reptilario 1', 'Selva', 'Tropical', 5, 0, 'Sin disponibilidad'
+
+}
+
+
+Records Animales(id_animal, expediente, nombre_animal, sexo, fecha_ingreso, estado_salud, id_especie, id_recinto) {
+
+  1, 'EXP-2026-001', 'Jaguar', 'Macho', '2026-09-29', 'Estable', 1, 1
+
+  2, 'EXP-2026-002', 'Tucan', 'Macho', '2026-09-29', 'Estable', 2, 2
+
+}
+
+
+Records EvaluacionesMedicas(id_evaluacion, id_animal, fecha_evaluacion, diagnostico, tratamiento, observaciones, estado_salud) {
+
+  1, 1, '2026-09-29', 'Revision general', 'Observacion', 'Sin complicaciones', 'Estable'
+
+  2, 2, '2026-09-29', 'Revision general', 'Observacion', 'Sin complicaciones', 'Estable'
+
+}
+
+
+Records Movimientos(id_movimiento, id_animal, fecha_movimiento, tipo_movimiento, recinto_origen, recinto_destino, destino_externo, motivo) {
+
+  1, 1, '2026-09-29', 'Ingreso', null, 1, null, 'Ingreso al centro de rescate'
+
+  2, 2, '2026-09-29', 'Ingreso', null, 2, null, 'Ingreso al centro de rescate'
